@@ -1,0 +1,23 @@
+{
+  "name": "node-aws-travis-playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha -R spec -w test/*Specs.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liddellj/node-aws-travis-playground.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/liddellj/node-aws-travis-playground/issues"
+  },
+  "homepage": "https://github.com/liddellj/node-aws-travis-playground#readme",
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "mocha": "^2.2.5"
+  }
+}
