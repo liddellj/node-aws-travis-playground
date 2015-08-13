@@ -4,7 +4,7 @@ node_js:
 before_install:
   - mkdir build
 after_success:
-  - zip -r build/app.zip . -x ".*" -x "*/.*"
+  - zip -r build/app.zip . -x ".*" -x "*/.*" -x "*.sublime-project" -x "README.md" -x "build" -x "test"
 deploy:
   provider: s3
   access_key_id: $AWS_ACCESS_KEY_ID
