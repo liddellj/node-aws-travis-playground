@@ -1,8 +1,10 @@
 language: node_js
 node_js:
   - "0.12"
+before_install:
+  - mkdir build
 after_success:
-  "zip -r build/app.zip . -x '.*' -x '*/.*'"
+  - zip -r build/app.zip . -x ".*" -x "*/.*"
 deploy:
   provider: s3
   access_key_id: $AWS_ACCESS_KEY_ID
