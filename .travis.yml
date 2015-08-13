@@ -3,13 +3,14 @@ node_js:
   - "0.12"
 after_success:
   "zip -r build/app.zip . -x '.*' -x '*/.*'"
-#deploy:
-#  provider: s3
-#  access_key_id: ??
-#  secret_access_key: ??
-#  bucket: "S3 Bucket"
-#  skip_cleanup: true
-#  region: eu-west-1
-#  endpoint: s3-eu-west-1.amazonaws.com
-#  local_dir: build
-#  upload_dir: travis-builds
+deploy:
+  provider: s3
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
+  bucket: liddellj
+  skip_cleanup: true
+  region: eu-west-1
+  endpoint: liddellj.s3-eu-west-1.amazonaws.com
+  local_dir: build
+  upload_dir: travis-builds
+  acl: public-read
