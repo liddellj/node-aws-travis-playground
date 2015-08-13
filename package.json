@@ -2,9 +2,11 @@
   "name": "node-aws-travis-playground",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
+  "private": true,
   "scripts": {
-    "test": "./node_modules/.bin/mocha -R spec test/*Specs.js"
+    "test": "./node_modules/.bin/mocha -R spec test/*Specs.js",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
