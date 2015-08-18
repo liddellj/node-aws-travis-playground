@@ -14,7 +14,7 @@ deploy:
   env: liddellj-env
   zip-file: build/app.zip
   skip_cleanup: true
-  bucket: liddellj
+  bucket_name: liddellj
   bucket_path: eb-deployments
 #deploy:
 #  provider: s3
