@@ -6,13 +6,24 @@ before_install:
 after_success:
   - zip -r build/app.zip . -x@exclude.lst
 deploy:
-  provider: s3
+  provider: elasticbeanstalk
   access_key_id: $AWS_ACCESS_KEY_ID
   secret_access_key: $AWS_SECRET_ACCESS_KEY
-  bucket: liddellj
+  region: us-east-1
+  app: liddellj
+  env: liddellj-env
+  zip-file: build/app.zip
   skip_cleanup: true
-  region: eu-west-1
-  endpoint: liddellj.s3-eu-west-1.amazonaws.com
-  local_dir: build
-  upload_dir: travis-builds
-  acl: public-read
+  bucket: liddellj
+  bucket_path: eb-deployments
+#deploy:
+#  provider: s3
+#  access_key_id: $AWS_ACCESS_KEY_ID
+#  secret_access_key: $AWS_SECRET_ACCESS_KEY
+#  bucket: liddellj
+#  skip_cleanup: true
+#  region: eu-west-1
+#  endpoint: liddellj.s3-eu-west-1.amazonaws.com
+#  local_dir: build
+#  upload_dir: travis-builds
+#  acl: public-read
