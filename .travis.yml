@@ -1,9 +1,10 @@
 language: node_js
 node_js:
   - "0.12"
-before_install:
+after_install:
   - mkdir build
-after_success:
+  - npm run build
+before_deploy:
   - zip -r build/app.zip . -x@exclude.lst
 deploy:
   provider: elasticbeanstalk
@@ -16,14 +17,3 @@ deploy:
   skip_cleanup: true
   bucket_name: liddellj
   bucket_path: eb-deployments
-#deploy:
-#  provider: s3
-#  access_key_id: $AWS_ACCESS_KEY_ID
-#  secret_access_key: $AWS_SECRET_ACCESS_KEY
-#  bucket: liddellj
-#  skip_cleanup: true
-#  region: eu-west-1
-#  endpoint: liddellj.s3-eu-west-1.amazonaws.com
-#  local_dir: build
-#  upload_dir: travis-builds
-#  acl: public-read

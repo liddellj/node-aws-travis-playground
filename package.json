@@ -13,7 +13,8 @@
     "test": "eslint src && mocha -R spec tests/*Specs.js",
     "start": "node lib/server",
     "build": "npm run clean && babel src -d lib --experimental",
-    "postinstall": "npm run build"
+    "docker-build": "docker build --no-cache -t liddellj/myimage .",
+    "docker-run": "docker run -t -i -P liddellj/myimage"
   },
   "repository": {
     "type": "git",
