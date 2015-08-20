@@ -15,7 +15,9 @@
     "build": "npm run clean && babel src -d lib --experimental",
     "docker-build": "docker build --no-cache -t liddellj/myimage .",
     "docker-run": "docker run -t -i -P liddellj/myimage",
-    "coverage": "istanbul cover --report lcovonly _mocha -- --compilers js:babel/register -R spec tests/*Specs.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "precoverage": "rm -rf ./coverage",
+    "coverage": "istanbul cover --report lcovonly _mocha -- --compilers js:babel/register -R spec tests/*Specs.js",
+    "postcoverage": "if [ -n \"$CI\" ]; then cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js; fi"
   },
   "repository": {
     "type": "git",
