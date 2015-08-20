@@ -1,10 +1,12 @@
 language: node_js
 node_js:
   - "0.12"
+after_success:
+  - npm run build
+  - npm run coverage
 before_deploy:
   - mkdir build
-  - npm run build
-  - zip -r build/app.zip . -x@exclude.lst
+  - zip -q -r build/app.zip . -x@exclude.lst
 deploy:
   provider: elasticbeanstalk
   access_key_id: $AWS_ACCESS_KEY_ID
