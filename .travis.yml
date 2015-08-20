@@ -10,7 +10,7 @@ deploy:
   access_key_id: $AWS_ACCESS_KEY_ID
   secret_access_key: $AWS_SECRET_ACCESS_KEY
   region: us-east-1
-  app: liddellj
+  app: liddellj-app
   env: liddellj-env
   zip-file: build/app.zip
   skip_cleanup: true
