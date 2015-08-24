@@ -1,7 +1,0 @@
-.*
-*/.*
-/*.sublime-project
-/exclude.lst
-/README.md
-/build/*
-/test/*

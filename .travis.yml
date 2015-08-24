@@ -11,8 +11,7 @@ after_success:
   - npm run docker-build
   - npm run docker-push
 before_deploy:
-  - mkdir build
-  - zip -q -r build/app.zip . -x@exclude.lst
+  - npm run docker-aws-version
 deploy:
   provider: elasticbeanstalk
   access_key_id: $AWS_ACCESS_KEY_ID
@@ -20,7 +19,7 @@ deploy:
   region: us-east-1
   app: liddellj-app
   env: liddellj-env
-  zip-file: build/app.zip
+  zip-file: Dockerrun.aws.json
   skip_cleanup: true
   bucket_name: liddellj
   bucket_path: eb-deployments
