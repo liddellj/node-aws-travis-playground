@@ -21,7 +21,6 @@
     "docker-run": "docker run -t -i -P liddellj/my-app:$npm_package_version",
     "docker-push": "docker push liddellj/my-app:$npm_package_version",
     "docker-aws-version": "sed -i -e s/my-app/my-app:$npm_package_version/g Dockerrun.aws.json",
-    "postdocker-aws-version": "ELASTIC_BEANSTALK_LABEL=$npm_package_version",
     "watch": "babel src -d lib --experimental -w",
     "dev-server": "node lib/webpack",
     "server": "nodemon --debug lib/server",
