@@ -16,7 +16,7 @@
     "postcoverage": "if [ -n \"$CI\" ]; then cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js; fi",
     "pretest": "npm run lint",
     "preversion": "npm test",
-    "postversion": "git push && git push --tags",
+    "postversion": "git push --follow-tags",
     "docker-build": "docker build --no-cache -t liddellj/my-app:$npm_package_version .",
     "docker-run": "docker run -t -i -P liddellj/my-app:$npm_package_version",
     "docker-push": "if [ -n \"$CI\" && -n \"$TRAVIS_TAG\" ]; then docker push liddellj/my-app:$npm_package_version; fi",
