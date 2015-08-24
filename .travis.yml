@@ -1,9 +1,15 @@
 language: node_js
+sudo: required
 node_js:
   - "0.12"
+services:
+  - docker
 after_success:
   - npm run build
   - npm run coverage
+  - docker login -e $DOCKER_EMAIL -p $DOCKER_PASSWORD -u $DOCKER_USERNAME
+  - npm run docker-build
+  - npm run docker-push
 before_deploy:
   - mkdir build
   - zip -q -r build/app.zip . -x@exclude.lst

@@ -17,8 +17,10 @@
     "postcoverage": "if [ -n \"$CI\" ]; then cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js; fi",
     "pretest": "npm run lint",
 
-    "docker-build": "docker build --no-cache -t liddellj/myimage .",
-    "docker-run": "docker run -t -i -P liddellj/myimage",
+    "docker-build": "docker build --no-cache -t liddellj/my-app:$npm_package_version .",
+    "docker-run": "docker run -t -i -P liddellj/my-app:$npm_package_version",
+    "docker-push": "docker push liddellj/my-app:$npm_package_version",
+
     "watch": "babel src -d lib --experimental -w",
     "dev-server": "node lib/webpack",
     "server": "nodemon --debug lib/server",
