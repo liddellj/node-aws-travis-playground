@@ -1,6 +1,6 @@
 {
   "name": "node-aws-travis-playground",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "description": "",
   "main": "app.js",
   "private": true,
