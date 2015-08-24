@@ -1,5 +1,9 @@
 {
   "AWSEBDockerrunVersion": "1",
+  "Authentication": {
+    "Bucket": "liddellj-docker",
+    "Key": "config.json"
+  },
   "Image": {
     "Name": "liddellj/my-app",
     "Update": "true"
