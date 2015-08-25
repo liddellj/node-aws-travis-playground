@@ -44,3 +44,6 @@ node_modules
 
 # Build output directory
 lib
+
+# Development environment variables
+.env
