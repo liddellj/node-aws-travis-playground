@@ -12,6 +12,10 @@ const app = express();
 app.set('views', './views');  
 app.set('view engine', 'jade');
 
+app.get('/health', function (req, res) {
+  res.end();
+});
+
 app.get('/*', function (req, res) {
   Router.run(routes, req.url, Handler => {
     let content = React.renderToString(<Handler />);
