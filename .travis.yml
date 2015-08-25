@@ -9,10 +9,10 @@ env:
 after_success:
   - npm run build
   - npm run coverage
-  - docker login -e $DOCKER_EMAIL -p $DOCKER_PASSWORD -u $DOCKER_USERNAME
   - npm run docker-build
-  - npm run docker-push
 before_deploy:
+  - docker login -e $DOCKER_EMAIL -p $DOCKER_PASSWORD -u $DOCKER_USERNAME
+  - npm run docker-push
   - npm run docker-aws-version
 deploy:
   on:
