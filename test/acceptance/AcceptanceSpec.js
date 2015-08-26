@@ -6,8 +6,10 @@ const should = chai.should();
 describe('My Acceptance Test', function() {
   let server;
 
-  beforeEach(function() {
-    server = app.listen(3000);
+  beforeEach(function(done) {
+    server = app.listen(3000, function() {
+      done();
+    });
   });
 
   it('should return 200', function(done) {
@@ -16,6 +18,7 @@ describe('My Acceptance Test', function() {
         console.log(err, err.stack);
       } else {
         res.statusCode.should.equal(200);
+        res.body.should.not.be.null;
         JSON.parse(res.body).should.eql({ id: 666, name: 'Garfield' });
       }
 
