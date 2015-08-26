@@ -19,7 +19,7 @@ describe('My Acceptance Test', function() {
         JSON.parse(res.body).should.eql({ id: 666, name: 'Garfield' });
       }
 
-      done();
+      done(err);
     });
   });
 
