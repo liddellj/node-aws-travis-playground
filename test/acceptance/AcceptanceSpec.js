@@ -12,8 +12,13 @@ describe('My Acceptance Test', function() {
 
   it('should return 200', function(done) {
     request.get('http://localhost:3000/dynamodb', function (err, res, body) {
-      res.statusCode.should.equal(200);
-      JSON.parse(res.body).should.eql({ id: 666, name: 'Garfield' });
+      if (err) {
+        console.log(err, err.stack);
+      } else {
+        res.statusCode.should.equal(200);
+        JSON.parse(res.body).should.eql({ id: 666, name: 'Garfield' });
+      }
+
       done();
     });
   });
