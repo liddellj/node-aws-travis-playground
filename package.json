@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "rm -rf lib",
     "lint": "eslint .",
-    "test": "mocha --compilers js:babel/register",
+    "test": "mocha --compilers js:babel/register --recursive",
     "start": "node lib/server",
     "build": "babel src -d lib --experimental",
     "coverage": "istanbul cover --report lcovonly _mocha -- --compilers js:babel/register",
@@ -48,15 +48,20 @@
     "mocha-lcov-reporter": "0.0.2",
     "nodemon": "^1.4.1",
     "react-hot-loader": "^1.2.8",
+    "request": "^2.61.0",
     "webpack": "^1.11.0",
     "webpack-dev-server": "^1.10.1"
   },
   "dependencies": {
+    "aws-sdk": "^2.1.47",
     "babel": "^5.8.21",
     "dotenv": "^1.2.0",
+    "dynamodb-doc": "^1.0.0",
+    "dynamoose": "^0.4.0",
     "express": "^4.13.3",
     "jade": "^1.11.0",
     "react": "^0.13.3",
-    "react-router": "^0.13.3"
+    "react-router": "^0.13.3",
+    "request": "^2.61.0"
   }
 }

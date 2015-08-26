@@ -1,4 +1,5 @@
 rules:
   no-unused-vars: 0
+  no-console: 0
 env:
   mocha: true
