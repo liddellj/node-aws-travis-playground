@@ -1,6 +1,6 @@
 import chai from 'chai';
 import request from 'request';
-import app from '../../lib/server';
+import app from '../../src/server';
 const should = chai.should();
 
 describe('My Acceptance Test', function() {
