@@ -1,4 +1,4 @@
-/* eslint no-console: 0 */
+/* eslint no-console: 0 no-unused-vars: 0 */
 
 import environment from './environment';
 environment();
@@ -22,14 +22,18 @@ if (process.env.DYNAMODB_LOCAL_ENDPOINT){
   dynamoose.local(process.env.DYNAMODB_LOCAL_ENDPOINT);
 }
 
-let Cat = dynamoose.model('Cat', { id: Number, name: String });
-
-app.get('/dynamodb', function (req, res) {
+app.get('/dynamodb', function (req, res, next) {
+  let Cat = dynamoose.model('Cat', { id: Number, name: String });
   let garfield = new Cat({ id: 666, name: 'Garfield' });
-  garfield.save();
 
-  Cat.get(666).then(function(badCat) {
-    res.send(badCat);
+  garfield.save(() => {
+    Cat.get(666, (err, badCat) => {
+      if (err){
+        next(err);
+      } else {
+        res.send(badCat);
+      }
+    });
   });
 });
 
@@ -38,6 +42,11 @@ app.get('/*', function (req, res) {
     let content = React.renderToString(<Handler />);
     res.render('index', { content: content });
   });
+});
+
+app.use((err, req, res, next) => {
+  res.status(500);
+  res.send(err);
 });
 
 module.exports = app;

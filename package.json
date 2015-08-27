@@ -8,6 +8,7 @@
     "clean": "rm -rf lib",
     "lint": "eslint .",
     "test": "mocha --compilers js:babel/register --recursive",
+    "watch": "npm test -- --watch",
     "start": "node lib/server",
     "build": "babel src -d lib --experimental",
     "coverage": "istanbul cover --report lcovonly _mocha -- --compilers js:babel/register --recursive",
@@ -21,7 +22,7 @@
     "docker-run": "docker run -t -i -P liddellj/my-app:$npm_package_version",
     "docker-push": "if [ -n \"$CI\" ] && [ -n \"$TRAVIS_TAG\" ]; then docker push liddellj/my-app:$npm_package_version; fi",
     "docker-aws-version": "if [ -n \"$CI\" ] && [ -n \"$TRAVIS_TAG\" ]; then sed -i -e s/my-app/my-app:$npm_package_version/g Dockerrun.aws.json; fi",
-    "watch": "babel src -d lib --experimental -w",
+    "build-watch": "babel src -d lib --experimental -w",
     "dev-server": "node lib/webpack",
     "server": "nodemon --debug lib/server",
     "start-dev": "npm run watch & npm run dev-server & npm run server"
