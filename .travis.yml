@@ -13,6 +13,7 @@ before_script:
 after_success:
   - npm run coverage
 before_deploy:
+  - npm run build
   - npm run docker-build
   - docker login -e $DOCKER_EMAIL -p $DOCKER_PASSWORD -u $DOCKER_USERNAME
   - npm run docker-push
