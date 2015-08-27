@@ -1,12 +1,11 @@
 /* eslint no-console: 0 no-unused-vars: 0 */
 
-import environment from './environment';
-environment();
-
+import './environment';
 import express from 'express';
 import React from 'react';
 import Router from 'react-router';
 import routes from './routes';
+import Cat from './models/cat';
 const app = express();
 
 app.set('views', './views');  
@@ -16,14 +15,7 @@ app.get('/health', function (req, res) {
   res.end();
 });
 
-import dynamoose from 'dynamoose';
-
-if (process.env.DYNAMODB_LOCAL_ENDPOINT){
-  dynamoose.local(process.env.DYNAMODB_LOCAL_ENDPOINT);
-}
-
 app.get('/dynamodb', function (req, res, next) {
-  let Cat = dynamoose.model('Cat', { id: Number, name: String });
   let garfield = new Cat({ id: 666, name: 'Garfield' });
 
   garfield.save(() => {

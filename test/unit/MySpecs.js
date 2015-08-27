@@ -1,6 +1,6 @@
 var should = require('chai').should();
 
-describe('MyApp', function() {
+describe('My Unit Test', function() {
   it('should be testable', function() {
     true.should.equal(true);
   });
