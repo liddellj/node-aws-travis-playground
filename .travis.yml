@@ -12,8 +12,8 @@ before_script:
   - java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -inMemory &
 after_success:
   - npm run coverage
-  - npm run docker-build
 before_deploy:
+  - npm run docker-build
   - docker login -e $DOCKER_EMAIL -p $DOCKER_PASSWORD -u $DOCKER_USERNAME
   - npm run docker-push
   - npm run docker-aws-version
