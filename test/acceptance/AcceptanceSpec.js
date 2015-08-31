@@ -10,18 +10,70 @@ describe('My Acceptance Test', function() {
   before(function() {
     request = supertest(app);
 
-    delete dynamoose.models.Cat;
+    delete dynamoose.models.Crossover;
   });
 
-  it('should return 200', function(done) {
+  it('should be able to create a crossover', function(done) {
     request
-      .get('/dynamodb')
-      .expect(200, done);
+      .post('/crossovers')
+      .send({ id: 101 })
+      .expect(200)
+      .expect({ id: 101, changes: [], gain: 0 }, done);
   });
 
-  it('should return correct body', function(done) {
+  it('should be able to get a crossover', function(done) {
     request
-      .get('/dynamodb')
-      .expect({ id: 666, name: 'Garfield' }, done);
+      .post('/crossovers')
+      .send({ id: 102 })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+
+        request
+          .get('/crossovers/102')
+          .expect({ id: 102, changes: [], gain: 0 }, done);
+      });
+  });
+
+  it('should be able to post a change', function(done) {
+    request
+      .post('/crossovers')
+      .send({ id: 103 })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+
+        request
+          .post('/crossovers/103/changes')
+          .send({ type: 'set-gain', gain: 1 })
+          .expect(200, done);
+      });
+  });
+
+  it('should be able to publish changes', function(done) {
+    request
+      .post('/crossovers')
+      .send({ id: 104 })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+
+        request
+          .post('/crossovers/104/changes')
+          .send({ type: 'set-gain', gain: 1 })
+          .expect(200)
+          .end((err, res) => {
+            if (err) {
+              return done(err);
+            }
+
+            request
+              .post('/crossovers/104/publish')
+              .expect({ id: 104, changes: [], gain: 1 }, done);
+          });
+      });
   });
 });

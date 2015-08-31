@@ -5,28 +5,16 @@ import express from 'express';
 import React from 'react';
 import Router from 'react-router';
 import routes from './routes';
-import Cat from './models/cat';
+import crossoverRouter from './routes/crossoverRouter';
 const app = express();
 
 app.set('views', './views');  
 app.set('view engine', 'jade');
 
+app.use('/crossovers', crossoverRouter);
+
 app.get('/health', function (req, res) {
   res.end();
-});
-
-app.get('/dynamodb', function (req, res, next) {
-  let garfield = new Cat({ id: 666, name: 'Garfield' });
-
-  garfield.save(() => {
-    Cat.get(666, (err, badCat) => {
-      if (err){
-        next(err);
-      } else {
-        res.send(badCat);
-      }
-    });
-  });
 });
 
 app.get('/*', function (req, res) {
