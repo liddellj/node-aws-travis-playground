@@ -1,12 +1,14 @@
 /* eslint no-console: 0 no-unused-vars: 0 */
 
 import './environment';
+import debug from 'debug';
 import express from 'express';
 import React from 'react';
 import Router from 'react-router';
 import routes from './routes';
 import crossoverRouter from './routes/crossoverRouter';
 const app = express();
+const error  = debug('server:error');
 
 app.set('views', './views');  
 app.set('view engine', 'jade');
@@ -25,6 +27,8 @@ app.get('/*', function (req, res) {
 });
 
 app.use((err, req, res, next) => {
+  error(err);
+
   res.status(500);
   res.send(err);
 });
