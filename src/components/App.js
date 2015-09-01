@@ -7,7 +7,10 @@ export default class App extends React.Component {
       <h1>Hello Jim's App Handler Version {process.env.npm_package_version} ({process.env.ENV_LABEL})</h1>
         <RouteHandler />
         <small>Some feature</small>
+        <br />
         <small>Some tweak</small>
+        <br />
+        <small>Some other tweak</small>
       </div>;
   }
 }
