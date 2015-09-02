@@ -18,8 +18,12 @@ before_deploy:
   - docker login -e $DOCKER_EMAIL -p $DOCKER_PASSWORD -u $DOCKER_USERNAME
   - npm run docker-push
   - npm run docker-aws-version
+  - echo "TRAVIS_BRANCH = $TRAVIS_BRANCH"
+  - echo "TRAVIS_TAG = $TRAVIS_TAG"
+  - echo "TRAVIS_PULL_REQUEST = $TRAVIS_PULL_REQUEST"
 deploy:
   on:
+    condition: "$TRAVIS_BRANCH = master"
     tags: true
   provider: elasticbeanstalk
   access_key_id: $AWS_ACCESS_KEY_ID
