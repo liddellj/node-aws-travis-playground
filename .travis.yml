@@ -12,15 +12,15 @@ before_script:
   - java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -inMemory &
 after_success:
   - npm run coverage
+  - echo "TRAVIS_BRANCH = $TRAVIS_BRANCH"
+  - echo "TRAVIS_TAG = $TRAVIS_TAG"
+  - echo "TRAVIS_PULL_REQUEST = $TRAVIS_PULL_REQUEST"
 before_deploy:
   - npm run build
   - npm run docker-build
   - docker login -e $DOCKER_EMAIL -p $DOCKER_PASSWORD -u $DOCKER_USERNAME
   - npm run docker-push
   - npm run docker-aws-version
-  - echo "TRAVIS_BRANCH = $TRAVIS_BRANCH"
-  - echo "TRAVIS_TAG = $TRAVIS_TAG"
-  - echo "TRAVIS_PULL_REQUEST = $TRAVIS_PULL_REQUEST"
 deploy:
   on:
     condition: "$TRAVIS_BRANCH = master"
