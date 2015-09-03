@@ -7,27 +7,14 @@ services:
 env:
   - ELASTIC_BEANSTALK_LABEL=$TRAVIS_TAG
 before_script:
-  - wget http://dynamodb-local.s3-website-us-west-2.amazonaws.com/dynamodb_local_latest.tar.gz
-  - tar xfz dynamodb_local_latest.tar.gz
-  - java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -inMemory &
+  - make dynamodb
 after_success:
-  - npm run coverage
-  - echo "TRAVIS_BRANCH = $TRAVIS_BRANCH"
-  - echo "TRAVIS_TAG = $TRAVIS_TAG"
-  - echo "TRAVIS_PULL_REQUEST = $TRAVIS_PULL_REQUEST"
-  - GIT_BRANCH=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
-  - echo "GIT_BRANCH = $GIT_BRANCH"
-  - GIT_BRANCH_2=$(git symbolic-ref HEAD --short)
-  - echo "GIT_BRANCH_2 = $GIT_BRANCH_2"
+  - make coverage
 before_deploy:
-  - npm run build
-  - npm run docker-build
-  - docker login -e $DOCKER_EMAIL -p $DOCKER_PASSWORD -u $DOCKER_USERNAME
-  - npm run docker-push
-  - npm run docker-aws-version
+  - make build
+  - make docker-push
 deploy:
   on:
-    condition: "$GIT_BRANCH = master"
     tags: true
   provider: elasticbeanstalk
   access_key_id: $AWS_ACCESS_KEY_ID
