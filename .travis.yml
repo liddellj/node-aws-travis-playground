@@ -5,7 +5,7 @@ node_js:
 services:
   - docker
 env:
-  - ELASTIC_BEANSTALK_LABEL=$TRAVIS_TAG GIT_BRANCH=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+  - ELASTIC_BEANSTALK_LABEL=$TRAVIS_TAG
 before_script:
   - wget http://dynamodb-local.s3-website-us-west-2.amazonaws.com/dynamodb_local_latest.tar.gz
   - tar xfz dynamodb_local_latest.tar.gz
@@ -15,7 +15,10 @@ after_success:
   - echo "TRAVIS_BRANCH = $TRAVIS_BRANCH"
   - echo "TRAVIS_TAG = $TRAVIS_TAG"
   - echo "TRAVIS_PULL_REQUEST = $TRAVIS_PULL_REQUEST"
+  - GIT_BRANCH=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
   - echo "GIT_BRANCH = $GIT_BRANCH"
+  - GIT_BRANCH_2=$(git symbolic-ref HEAD --short)
+  - echo "GIT_BRANCH_2 = $GIT_BRANCH_2"
 before_deploy:
   - npm run build
   - npm run docker-build
