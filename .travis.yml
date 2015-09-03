@@ -5,8 +5,7 @@ node_js:
 services:
   - docker
 env:
-  - ELASTIC_BEANSTALK_LABEL=$TRAVIS_TAG
-  - GIT_BRANCH=$(git symbolic-ref HEAD --short)
+  - ELASTIC_BEANSTALK_LABEL=$TRAVIS_TAG GIT_BRANCH=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 before_script:
   - wget http://dynamodb-local.s3-website-us-west-2.amazonaws.com/dynamodb_local_latest.tar.gz
   - tar xfz dynamodb_local_latest.tar.gz
@@ -25,7 +24,7 @@ before_deploy:
   - npm run docker-aws-version
 deploy:
   on:
-    condition: "$TRAVIS_BRANCH = master"
+    condition: "$GIT_BRANCH = master"
     tags: true
   provider: elasticbeanstalk
   access_key_id: $AWS_ACCESS_KEY_ID
