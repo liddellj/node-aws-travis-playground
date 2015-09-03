@@ -7,7 +7,7 @@ services:
 env:
   - ELASTIC_BEANSTALK_LABEL=$TRAVIS_TAG
 before_script:
-  - make dynamodb &
+  - make -s dynamodb &
 after_success:
   - make coverage
 before_deploy:
