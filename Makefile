@@ -2,6 +2,8 @@ PATH := node_modules/.bin:$(PATH)
 GIT_BRANCH := $(shell git symbolic-ref HEAD --short)
 NPM_VERSION := $(shell node -pe "require('./package.json').version")
 
+all: test build
+
 build: clean
 	babel src -d lib --experimental
 
@@ -14,7 +16,7 @@ release: test
 	git push --follow-tags
 
 clean:
-	rm -rf lib
+	rm -rf lib dynamodb
 
 lint:
 	eslint .
@@ -48,9 +50,10 @@ docker-push: docker-build docker-login
 		exit 1; \
 	fi
 
-dynamodb:
-	wget http://dynamodb-local.s3-website-us-west-2.amazonaws.com/dynamodb_local_latest.tar.gz
-	tar xfz dynamodb_local_latest.tar.gz
-	java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -inMemory
+dynamodb: clean
+	mkdir dynamodb
+	wget -P ./dynamodb http://dynamodb-local.s3-website-us-west-2.amazonaws.com/dynamodb_local_latest.tar.gz
+	cd dynamodb; tar xfz dynamodb_local_latest.tar.gz
+	java -Djava.library.path=./dynamodb/DynamoDBLocal_lib -jar ./dynamodb/DynamoDBLocal.jar -inMemory &
 
-.PHONY: coverage test build
+.PHONY: coverage test build dynamodb
