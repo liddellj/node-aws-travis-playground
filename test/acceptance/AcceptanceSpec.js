@@ -8,9 +8,9 @@ describe('My Acceptance Test', function() {
   let request;
 
   before(function() {
-    request = supertest(app);
-
     delete dynamoose.models.Crossover;
+
+    request = supertest(app);
   });
 
   it('should be able to create a crossover', function(done) {

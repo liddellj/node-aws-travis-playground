@@ -26,19 +26,18 @@ release-major: pre-release
 	git push --follow-tags
 
 clean:
-	rm -rf lib dynamodb
+	rm -rf lib dynamodb coverage
 
 lint:
 	eslint .
 
 test: lint
-	mocha --compilers js:babel/register --recursive
+	NODE_ENV=test mocha --compilers js:babel/register --recursive
 
 watch:
 	npm test -- --watch
 
-coverage:
-	rm -rf ./coverage
+coverage: clean
 	istanbul cover --report lcovonly node_modules/.bin/_mocha -- --compilers js:babel/register --recursive
 	if [ -n "$(CI)" ]; then cat ./coverage/lcov.info | codecov; fi
 

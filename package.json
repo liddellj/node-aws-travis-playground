@@ -2,11 +2,11 @@
   "name": "node-aws-travis-playground",
   "version": "7.7.0",
   "description": "",
-  "main": "app.js",
+  "main": "",
   "private": true,
   "scripts": {
     "test": "make test",
-    "start": "node lib/server"
+    "start": "node lib/main"
   },
   "repository": {
     "type": "git",
@@ -42,7 +42,10 @@
     "dotenv": "^1.2.0",
     "dynamoose": "^0.4.0",
     "express": "^4.13.3",
+    "express-session": "^1.11.3",
     "jade": "^1.11.0",
+    "passport": "~0.1.18",
+    "passport-openidconnect": "0.0.1",
     "react": "^0.13.3",
     "react-router": "^0.13.3"
   }
