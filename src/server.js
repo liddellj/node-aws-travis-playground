@@ -83,6 +83,10 @@ app.get('/auth/google/callback', passport.authenticate('openidconnect', {
   failureRedirect: '/login'
 }));
 
+app.get('/health', function (req, res) {
+  res.end();
+});
+
 app.all('*', function (req, res, next) {
   if (process.env.NODE_ENV != 'test' && !req.isAuthenticated()) {
     res.sendStatus(401);
@@ -93,9 +97,6 @@ app.all('*', function (req, res, next) {
 
 app.use('/crossovers', crossoverRouter);
 
-app.get('/health', function (req, res) {
-  res.end();
-});
 
 app.get('/*', function (req, res) {
   Router.run(routes, req.url, Handler => {
