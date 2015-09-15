@@ -10,7 +10,7 @@ import routes from './routes';
 import crossoverRouter from './routes/crossoverRouter';
 import passport from 'passport';
 import openidconnect from 'passport-openidconnect';
-import User from './models/user';
+import models from './models';
 import bodyParser from 'body-parser';
 
 const app = express();
@@ -23,7 +23,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  User.get(id, function(err, user) {
+  models.User.get(id, function(err, user) {
     done(err, user);
   });
 });
@@ -40,23 +40,21 @@ passport.use(new OpenIdConnectStrategy({
   oidcIssuer: 'accounts.google.com'
 },
 function(iss, sub, profile, accessToken, refreshToken, done) {
-  User.get(Number(profile.id), function(err, user) {
-    if (!err && !user){
-      user = new User({
-        id: Number(profile.id),
-        name: profile.name
-      });
-
-      user.save((err, model) => {
-        if (err) {
-          done(err);
-        }
-
-        done(err, model);
-      });
-    } else {
-      done(err, user);
+  models.User.findOne({
+    where: {
+      profileId: profile.id
     }
+  }).then(function(user) {
+    if (!user) {
+      models.User.create({
+        profileId: profile.id,
+        name: profile.name.toString()
+      }).then(function(user) {
+        done(null, user);
+      });
+    }
+  }).catch(function(err) {
+    done(err);
   });
 }));
 
@@ -87,16 +85,15 @@ app.get('/health', function (req, res) {
   res.end();
 });
 
-app.all('*', function (req, res, next) {
+/*app.all('*', function (req, res, next) {
   if (process.env.NODE_ENV != 'test' && !req.isAuthenticated()) {
     res.sendStatus(401);
   } else {
     next();
   }
-});
+});*/
 
 app.use('/crossovers', crossoverRouter);
-
 
 app.get('/*', function (req, res) {
   Router.run(routes, req.url, Handler => {
@@ -107,6 +104,8 @@ app.get('/*', function (req, res) {
 
 app.use((err, req, res, next) => {
   error(err);
+
+  console.log(err);
 
   res.status(500);
   res.send(err);

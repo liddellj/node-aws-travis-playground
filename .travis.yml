@@ -4,10 +4,12 @@ node_js:
   - "0.12"
 services:
   - docker
+addons:
+  - postgresql: "9.4"
 env:
   - ELASTIC_BEANSTALK_LABEL=$TRAVIS_TAG
 before_script:
-  - make dynamodb
+  - make migrate
 after_success:
   - make coverage
 before_deploy:
