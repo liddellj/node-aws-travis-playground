@@ -1,7 +1,7 @@
-/* eslint no-unused-vars: 0 */
+/* eslint no-unused-vars: 0 no-console: 0 */
 
 import express from 'express';
-import Crossover from '../models/crossover';
+import models from '../models';
 import bodyParser from 'body-parser';
 
 const router = express.Router();
@@ -9,51 +9,56 @@ const router = express.Router();
 router.use(bodyParser.json());
 
 router.post('/', (req, res, next) => {
-  let crossover = new Crossover(req.body);
-
-  crossover.save((err, model) => {
-    if (err) {
+  models.Crossover
+    .create(req.body)
+    .then((crossover) => {
+      res.send(crossover);
+    }).catch((err) => {
       next(err);
-    } else {
-      res.send(model);
-    }
-  });
+    });
 });
 
 router.get('/:id', function (req, res, next) {
-  Crossover.get(Number(req.params.id), (err, model) => {
-    if (err){
+  models.Crossover
+    .findById(Number(req.params.id))
+    .then((crossover) => {
+      res.send(crossover);
+    }).catch((err) => {
       next(err);
-    } else {
-      res.send(model);
-    }
-  });
+    });
 });
 
 router.post('/:id/changes', (req, res, next) => {
-  Crossover.get(Number(req.params.id), (err, model) => {
-    if (err){
+  models.Crossover
+    .findById(Number(req.params.id))
+    .then((crossover) => {
+      crossover.changes.push(req.body);
+      crossover.changed('changes', true);
+      crossover
+        .save()
+        .then((m) => {
+          res.send(m);
+        }).catch((err) => {
+          next(err);
+        });
+    }).catch((err) => {
       next(err);
-    } else {
-      model.changes.push(req.body);
-      model.save((err, m) => {
-        res.sendStatus(200);
-      });
-    }
-  });
+    });
 });
 
 router.post('/:id/publish', (req, res, next) => {
-  Crossover.get(Number(req.params.id), (err, model) => {
-    if (err){
+  models.Crossover.findById(Number(req.params.id))
+    .then((crossover) => {
+      crossover.publish();
+      crossover
+        .save()
+        .then((m) => {
+          res.send(m);
+        });
+    })
+    .catch((err) => {
       next(err);
-    } else {
-      model.publish();
-      model.save((err, m) => {
-        res.send(m);
-      });
-    }
-  });
+    });
 });
 
 module.exports = router;

@@ -1,19 +1,8 @@
-/* eslint no-cond-assign: 0 */
-import dynamoose from 'dynamoose';
+module.exports = function(sequelize, DataTypes) {
+  var User = sequelize.define('User', {
+    profileId: DataTypes.STRING,
+    name: DataTypes.STRING
+  });
 
-if (process.env.DYNAMODB_LOCAL_ENDPOINT){
-  dynamoose.local(process.env.DYNAMODB_LOCAL_ENDPOINT);
-}
-
-var schema = new dynamoose.Schema({
-  id: {
-    type: Number,
-    hashKey: true
-  },
-  name: {
-    type: String,
-    required: true
-  }
-});
-
-module.exports = dynamoose.model('User', schema);
+  return User;
+};

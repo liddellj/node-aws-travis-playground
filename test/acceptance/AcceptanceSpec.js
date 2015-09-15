@@ -1,16 +1,16 @@
 import chai from 'chai';
 import supertest from 'supertest';
 import app from '../../src/server';
-import dynamoose from 'dynamoose';
+import models from '../../src/models';
 const should = chai.should();
 
 describe('My Acceptance Test', function() {
   let request;
 
   before(function() {
-    delete dynamoose.models.Crossover;
-
     request = supertest(app);
+
+    models.sequelize.sync({ force: true });
   });
 
   it('should be able to create a crossover', function(done) {
@@ -48,7 +48,7 @@ describe('My Acceptance Test', function() {
         request
           .post('/crossovers/103/changes')
           .send({ type: 'set-gain', gain: 1 })
-          .expect(200, done);
+          .expect({ id: 103, changes: [{ type: 'set-gain', gain: 1 }], gain: 0 }, done);
       });
   });
 
@@ -64,7 +64,7 @@ describe('My Acceptance Test', function() {
         request
           .post('/crossovers/104/changes')
           .send({ type: 'set-gain', gain: 1 })
-          .expect(200)
+          .expect({ id: 104, changes: [{ type: 'set-gain', gain: 1 }], gain: 0 })
           .end((err, res) => {
             if (err) {
               return done(err);

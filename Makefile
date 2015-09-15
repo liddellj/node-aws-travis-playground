@@ -26,7 +26,7 @@ release-major: pre-release
 	git push --follow-tags
 
 clean:
-	rm -rf lib dynamodb coverage
+	rm -rf lib coverage
 
 lint:
 	eslint .
@@ -57,10 +57,8 @@ docker-push: docker-build
 		exit 1; \
 	fi
 
-dynamodb: clean
-	mkdir dynamodb
-	wget -P ./dynamodb http://dynamodb-local.s3-website-us-west-2.amazonaws.com/dynamodb_local_latest.tar.gz -nv
-	cd dynamodb; tar xfz dynamodb_local_latest.tar.gz
-	java -Djava.library.path=./dynamodb/DynamoDBLocal_lib -jar ./dynamodb/DynamoDBLocal.jar -inMemory &
+migrate:
+	cd src
+	sequelize db:migrate --url postgres://postgres:@localhost:5432/postgres
 
-.PHONY: all build pre-release release-patch release-minor release-major clean lint test watch coverage docker-build docker-run docker-push dynamodb
+.PHONY: all build pre-release release-patch release-minor release-major clean lint test watch coverage docker-build docker-run docker-push migrate
