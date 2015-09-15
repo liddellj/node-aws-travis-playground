@@ -57,7 +57,6 @@ docker-push: docker-build
 	fi
 
 migrate:
-	cd src
-	sequelize db:migrate --url postgres://postgres:@localhost:5432/postgres
+	cd src; ../node_modules/.bin/sequelize db:migrate --url postgres://postgres:@localhost:5432/postgres
 
 .PHONY: all build pre-release release-patch release-minor release-major clean lint test watch coverage docker-build docker-run docker-push migrate
