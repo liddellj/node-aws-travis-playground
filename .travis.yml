@@ -5,7 +5,7 @@ node_js:
 services:
   - docker
 addons:
-  - postgresql: "9.4"
+  postgresql: "9.4"
 env:
   - ELASTIC_BEANSTALK_LABEL=$TRAVIS_TAG
 before_script:
