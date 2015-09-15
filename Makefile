@@ -48,7 +48,6 @@ docker-run: docker-build
 	docker run -t -i -P liddellj/my-app:$(NPM_VERSION)
 
 docker-push: docker-build
-	docker login -e $(DOCKER_EMAIL) -p $(DOCKER_PASSWORD) -u $(DOCKER_USERNAME)
 	if [ -n "$(CI)" ] && [ -n "$(TRAVIS_TAG)" ]; then \
 		docker push liddellj/my-app:$(NPM_VERSION); \
 		sed -i -e s/my-app/my-app:$(NPM_VERSION)/g Dockerrun.aws.json; \
