@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "test": "make test",
+    "prestart": "cd src && sequelize db:migrate --url $pg_connection_string",
     "start": "node lib/main"
   },
   "repository": {

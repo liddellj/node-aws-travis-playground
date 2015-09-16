@@ -5,16 +5,16 @@ module.exports = {
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/only-dev-server',
-    './src/app',
+    './src/app'
   ],
   output: {
     path: __dirname + '/public/js/',
     filename: 'app.js',
-    publicPath: 'http://localhost:8080/js/',
+    publicPath: 'http://localhost:8080/js/'
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoErrorsPlugin()
   ],
   resolve: {
     extensions: ['', '.js']
@@ -24,4 +24,4 @@ module.exports = {
       { test: /\.jsx?$/, loaders: ['react-hot', 'babel-loader?experimental'], exclude: /node_modules/ }
     ]
   }
-}
+};

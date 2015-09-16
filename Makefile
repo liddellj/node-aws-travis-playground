@@ -48,7 +48,6 @@ docker-run: docker-build
 	docker run -t -i -P liddellj/my-app:$(NPM_VERSION)
 
 docker-push: docker-build
-	docker login -e $(DOCKER_EMAIL) -p $(DOCKER_PASSWORD) -u $(DOCKER_USERNAME)
 	if [ -n "$(CI)" ] && [ -n "$(TRAVIS_TAG)" ]; then \
 		docker push liddellj/my-app:$(NPM_VERSION); \
 		sed -i -e s/my-app/my-app:$(NPM_VERSION)/g Dockerrun.aws.json; \
@@ -58,7 +57,6 @@ docker-push: docker-build
 	fi
 
 migrate:
-	cd src
-	sequelize db:migrate --url postgres://postgres:@localhost:5432/postgres
+	cd src; ../node_modules/.bin/sequelize db:migrate --url $(PG_CONNECTION_STRING)
 
 .PHONY: all build pre-release release-patch release-minor release-major clean lint test watch coverage docker-build docker-run docker-push migrate
