@@ -1,5 +1,7 @@
 'use strict';
 
+var Promise = require('sequelize').Promise;
+
 module.exports = {
   up: function (queryInterface, Sequelize) {
 
