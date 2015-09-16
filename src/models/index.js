@@ -6,7 +6,7 @@ var Sequelize = require('sequelize');
 var basename  = path.basename(module.filename);
 var db        = {};
 
-var sequelize = new Sequelize('postgres://postgres:@localhost:5432/postgres');
+var sequelize = new Sequelize(process.env.pg_connection_string);
 
 fs
   .readdirSync(__dirname)

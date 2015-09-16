@@ -47,6 +47,3 @@ lib
 
 # Development environment variables
 .env
-
-# dynamodb directory
-dynamodb
