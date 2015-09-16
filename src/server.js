@@ -23,8 +23,14 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  models.User.get(id, function(err, user) {
-    done(err, user);
+  models.User.findOne({
+    where: {
+      profileId: id
+    }
+  }).then((user) => {
+    done(null, user);
+  }).catch((err) => {
+    done(err);
   });
 });
 
