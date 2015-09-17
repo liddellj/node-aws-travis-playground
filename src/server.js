@@ -23,11 +23,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  models.User.findOne({
-    where: {
-      profileId: id
-    }
-  }).then((user) => {
+  models.User.findById(id).then((user) => {
     done(null, user);
   }).catch((err) => {
     done(err);
@@ -58,6 +54,8 @@ function(iss, sub, profile, accessToken, refreshToken, done) {
       }).then(function(user) {
         done(null, user);
       });
+    } else {
+      done(null, user);
     }
   }).catch(function(err) {
     done(err);
